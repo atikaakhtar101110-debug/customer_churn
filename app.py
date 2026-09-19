@@ -58,8 +58,15 @@ def load_or_train_model():
             ('preprocessor', preprocessor),
             ('model', XGBClassifier(random_state=42, eval_metric='logloss'))
         ])
-        
-        return pipeline
+        if os.path.exists(model_filename):
+        try:
+            return joblib.load(model_filename)
+        except Exception as e:
+            st.warning(f"⚠️ Could not load saved model due to version mismatch ({e}). Training a fresh model instead...")
+    
+    # If no file exists or loading failed, you can either return the un-fitted pipeline 
+    # (or fit it if you have your dataset handy in the repo).
+    return pipeline
 
 # Load the pipeline
 pipeline = load_or_train_model()

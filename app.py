@@ -1,4 +1,4 @@
-@st.cache_resource
+
 def load_or_train_model():
     model_filename = "customer_churn_xgb_model.pkl"
     
